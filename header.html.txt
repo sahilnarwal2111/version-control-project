@@ -1,3 +1,0 @@
-<header>
-  <h1>DSA Problem Explorer</h1>
-</header>
