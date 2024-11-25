@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSA Problem Explorer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    select, button {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 1rem;
+    }
+    #problem-description, #solution {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+    #solution {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>DSA Problem Explorer</h1>
+  <p>Select a topic to explore problems:</p>
+
+  <select id="topic-select">
+    <option value="" disabled selected>Choose a topic</option>
+    <option value="arrays">Arrays</option>
+    <option value="linked-lists">Linked Lists</option>
+    <option value="graphs">Graphs</option>
+    <option value="dynamic-programming">Dynamic Programming</option>
+  </select>
+  <button id="load-problem">Load Problem</button>
+
+  <div id="problem-description">
+    <h2>Problem Description</h2>
+    <p>Select a topic and click "Load Problem" to view details.</p>
+  </div>
+
+  <div id="solution">
+    <h2>Solution</h2>
+    <p>The solution will appear here once a problem is selected.</p>
+  </div>
+
+  <script>
+    const problems = {
+      arrays: {
+        description: "Find the maximum subarray sum using the Kadane's Algorithm.",
+        solution: `
+          <strong>Code:</strong>
+          <pre>
+int maxSubArraySum(int a[], int size) {
+  int max_so_far = a[0];
+  int current_max = a[0];
+  for (int i = 1; i < size; i++) {
+    current_max = max(a[i], current_max + a[i]);
+    max_so_far = max(max_so_far, current_max);
+  }
+  return max_so_far;
+}
+          </pre>
+        `
+      },
+      "linked-lists": {
+        description: "Reverse a singly linked list.",
+        solution: `
+          <strong>Code:</strong>
+          <pre>
+Node* reverseList(Node* head) {
+  Node* prev = NULL;
+  Node* current = head;
+  Node* next = NULL;
+  while (current != NULL) {
+    next = current->next;
+    current->next = prev;
+    prev = current;
+    current = next;
+  }
+  return prev;
+}
+          </pre>
+        `
+      },
+      graphs: {
+        description: "Implement Depth First Search (DFS) for a graph.",
+        solution: `
+          <strong>Code:</strong>
+          <pre>
+void DFS(int node, vector<bool>& visited, vector<int> adj[]) {
+  visited[node] = true;
+  cout << node << " ";
+  for (int neighbor : adj[node]) {
+    if (!visited[neighbor]) {
+      DFS(neighbor, visited, adj);
+    }
+  }
+}
+          </pre>
+        `
+      },
+      "dynamic-programming": {
+        description: "Find the nth Fibonacci number using dynamic programming.",
+        solution: `
+          <strong>Code:</strong>
+          <pre>
+int fib(int n) {
+  if (n <= 1) return n;
+  int dp[n + 1];
+  dp[0] = 0;
+  dp[1] = 1;
+  for (int i = 2; i <= n; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2];
+  }
+  return dp[n];
+}
+          </pre>
+        `
+      }
+    };
+
+    document.getElementById('load-problem').addEventListener('click', () => {
+      const topic = document.getElementById('topic-select').value;
+      const problemDiv = document.getElementById('problem-description');
+      const solutionDiv = document.getElementById('solution');
+
+      if (problems[topic]) {
+        problemDiv.innerHTML = `
+          <h2>Problem Description</h2>
+          <p>${problems[topic].description}</p>
+        `;
+        solutionDiv.innerHTML = `
+          <h2>Solution</h2>
+          ${problems[topic].solution}
+        `;
+      } else {
+        problemDiv.innerHTML = `<h2>Problem Description</h2><p>Please select a valid topic.</p>`;
+        solutionDiv.innerHTML = `<h2>Solution</h2><p>The solution will appear here once a problem is selected.</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
